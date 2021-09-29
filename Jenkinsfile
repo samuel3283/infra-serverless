@@ -36,7 +36,8 @@ script {
             
             def docker_volumen    = "-v ${env.WORKSPACE}:/project/data -w /project/data"
 	
-            def comando = "aws configure set aws_access_key_id $ACCESS && aws configure set aws_secret_access_key $SECRET && aws configure set default.region ${env.AWS_REGION} && terraform init && terraform validate && terraform plan && terraform apply -auto-approve"			
+            //def comando = "aws configure set aws_access_key_id $ACCESS && aws configure set aws_secret_access_key $SECRET && aws configure set default.region ${env.AWS_REGION} && terraform init && terraform validate && terraform plan && terraform apply -auto-approve"			
+            def comando = "aws configure set aws_access_key_id $ACCESS && aws configure set aws_secret_access_key $SECRET && aws configure set default.region ${env.AWS_REGION} && terraform -v "			
             sh "docker run ${docker_volumen} --network=host  ${env.REGISTRY_NAME}:terraform-aws-cli sh -c \"${comando}\""
 
         }
