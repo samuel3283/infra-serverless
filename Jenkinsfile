@@ -15,14 +15,15 @@ script {
 
         withCredentials([usernamePassword(credentialsId: 'AWS_KEY', passwordVariable: 'SECRET', usernameVariable: 'ACCESS')]) {
             
-            sh 'aws_account_id = "${env.AWS_ACCOUNT_ID}" > terraform.tfvars'
+            sh "aws_account_id = ${env.AWS_ACCOUNT_ID} > terraform.tfvars"
+		/*
             sh "aws_access_key_id = ${ACCESS} >> terraform.tfvars"
             sh "aws_secret_access_key = ${SECRET} >> terraform.tfvars"
             sh 'aws_region = "${env.AWS_REGION}" > terraform.tfvars'
             sh 'env = "DESARROLLO" >> terraform.tfvars'
             sh 'env_lang = "python3.8" >> terraform.tfvars'
             sh 'tag_ceco = "pgo1007383" >> terraform.tfvars'
-      
+      			*/
             FILE_VAR = sh (
                 script: "cat  $WORKSPACE/terraform.tfvars",
                 returnStdout: true
