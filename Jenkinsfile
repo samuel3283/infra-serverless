@@ -21,7 +21,7 @@ script {
             sh "sed -i 's/#{AWS_REGION}/${env.AWS_REGION}/g' $WORKSPACE/terraform.tfvars"
 
             //def docker_volumen    = "-v ${env.WORKSPACE}:/project/data -w /project/data"
-            def docker_volumen    = "-v ${env.WORKSPACE}:/home -w /home"
+            def docker_volumen    = "-v ${env.WORKSPACE}:/workspace -w /workspace"
 	
             //def comando = "aws configure set aws_access_key_id $ACCESS && aws configure set aws_secret_access_key $SECRET && aws configure set default.region ${env.AWS_REGION} && terraform init && terraform validate && terraform plan && terraform apply -auto-approve"			
             def comando = "aws configure set aws_access_key_id $ACCESS && aws configure set aws_secret_access_key $SECRET && aws configure set default.region ${env.AWS_REGION} && ls -l && terraform -v && terraform init "
