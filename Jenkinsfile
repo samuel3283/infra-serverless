@@ -12,11 +12,17 @@ stage('Desplegando IaC') {
 
 script {
 
-      sh "sed -i 's/#{AWS_ACCOUNT_ID}/${env.AWS_ACCOUNT_ID}/g' $WORKSPACE/terraform.tfvars"
-      sh "sed -i 's/#{AWS_ACCESS_KEY_ID}/${ACCESS}/g' $WORKSPACE/terraform.tfvars"
-      sh "sed -i 's/#{AWS_SECRET_ACCESS_KEY}/${SECRET}/g' $WORKSPACE/terraform.tfvars"
-      sh "sed -i 's/#{AWS_REGION}/${env.AWS_REGION}/g' $WORKSPACE/terraform.tfvars"
+        withCredentials([
+			usernamePassword(credentialsId: 'AWS_KEY', passwordVariable: 'SECRET', usernameVariable: 'ACCESS')
+			]) {
 
+				sh "sed -i 's/#{AWS_ACCOUNT_ID}/${env.AWS_ACCOUNT_ID}/g' $WORKSPACE/terraform.tfvars"
+				sh "sed -i 's/#{AWS_ACCESS_KEY_ID}/${ACCESS}/g' $WORKSPACE/terraform.tfvars"
+				sh "sed -i 's/#{AWS_SECRET_ACCESS_KEY}/${SECRET}/g' $WORKSPACE/terraform.tfvars"
+				sh "sed -i 's/#{AWS_REGION}/${env.AWS_REGION}/g' $WORKSPACE/terraform.tfvars"
+
+		}
+		
       withDockerRegistry([credentialsId: "credentialDockerRegistry", url: "https://${env.REGISTRY_URL}" ]){            
 
         withCredentials([
