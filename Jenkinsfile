@@ -11,7 +11,7 @@ checkout scm
 stage('Desplegando IaC') {
 
 script {
-
+/*
         withCredentials([
 			usernamePassword(credentialsId: 'AWS_KEY', passwordVariable: 'SECRET', usernameVariable: 'ACCESS')
 			]) {
@@ -22,7 +22,7 @@ script {
 				sh "sed -i 's/#{AWS_REGION}/${env.AWS_REGION}/g' $WORKSPACE/terraform.tfvars"
 
 		}
-		
+	*/	
       withDockerRegistry([credentialsId: "credentialDockerRegistry", url: "https://${env.REGISTRY_URL}" ]){            
 
         withCredentials([
@@ -30,6 +30,10 @@ script {
 			usernamePassword(credentialsId: 'account-github', passwordVariable: 'PASSWORD_GIT', usernameVariable: 'USER_GIT')
 			]) {
             
+				sh "sed -i 's/#{AWS_ACCOUNT_ID}/${env.AWS_ACCOUNT_ID}/g' $WORKSPACE/terraform.tfvars"
+				sh "sed -i 's/#{AWS_ACCESS_KEY_ID}/${ACCESS}/g' $WORKSPACE/terraform.tfvars"
+				sh "sed -i 's/#{AWS_SECRET_ACCESS_KEY}/${SECRET}/g' $WORKSPACE/terraform.tfvars"
+				sh "sed -i 's/#{AWS_REGION}/${env.AWS_REGION}/g' $WORKSPACE/terraform.tfvars"
 
             //def docker_volumen    = "-v ${env.WORKSPACE}:/project/data -w /project/data"
             def docker_volumen    = "-v ${env.WORKSPACE}:/home -w /home"
