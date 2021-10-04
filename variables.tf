@@ -21,12 +21,12 @@ variable "aws_region" {
 
 variable "env" {
 	type = string
-	default = ""
+	default = "desarrollo"
 }
 
 variable "env_lang" {
     type = string
-    default = ""
+    default = "python3.8"
 }
 
 
@@ -34,6 +34,6 @@ variable "env_lang" {
 
 variable "tag_ceco" {
 	type = string
-	default = ""
+	default = "pgo1007383"
 }
 
